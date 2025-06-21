@@ -8,7 +8,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# ✅ إضافة التطبيقات الثلاثة
+# ✅ التطبيقات
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +41,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -75,12 +76,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # ✅ اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
-
 TIME_ZONE = 'Asia/Riyadh'
-
 USE_I18N = True
 USE_TZ = True
 
+# ✅ إعدادات الملفات الثابتة والوسائط
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# ✅ إعداد نوع الحقل الافتراضي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
