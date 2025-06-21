@@ -1,11 +1,14 @@
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
+# المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# إعدادات الحماية
 SECRET_KEY = 'django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7'
-
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
 # ✅ التطبيقات
@@ -17,11 +20,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'cloudinary',
+    'cloudinary_storage',  # ← مخصصة للتخزين السحابي
+    
     'store',
     'accounts',
     'dashboard',
 ]
 
+# ✅ الوسيطات
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -32,8 +39,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# روابط المشروع
 ROOT_URLCONF = 'asssa.urls'
 
+# ✅ إعداد القوالب
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -52,6 +61,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'asssa.wsgi.application'
 
+# قاعدة البيانات
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -59,32 +69,37 @@ DATABASES = {
     }
 }
 
+# تحقق كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ✅ اللغة والتوقيت
+# اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ إعدادات الملفات الثابتة والوسائط
+# ✅ إعدادات Cloudinary
+cloudinary.config( 
+  cloud_name = "duxou2ane",
+  api_key = "255475613753895",
+  api_secret = "fcYKr7pg-BpFxolKIfNApzTGZ64",
+  secure = True
+)
+
+# ✅ جعل Cloudinary هو التخزين الأساسي للوسائط
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# الملفات الثابتة
 STATIC_URL = 'static/'
 
+# إعدادات الوسائط
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ✅ إعداد نوع الحقل الافتراضي
+# نوع الحقول التلقائي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

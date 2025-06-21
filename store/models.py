@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField  # ← استيراد CloudinaryField
 
 
 class Category(models.Model):
@@ -23,7 +24,7 @@ class Product(models.Model):
     name = models.CharField("اسم المنتج", max_length=200)
     description = models.TextField("الوصف")
     price = models.DecimalField("السعر", max_digits=10, decimal_places=2)
-    image = models.ImageField("صورة المنتج", upload_to='products/')
+    image = CloudinaryField("صورة المنتج")  # ← التغيير هنا
     created_at = models.DateTimeField("تاريخ الإضافة", auto_now_add=True)
     available = models.BooleanField("متوفر", default=True)
 
