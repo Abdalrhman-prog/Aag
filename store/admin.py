@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import Product, Category  # تأكد أنك أنشأت هذه النماذج في models.py
+from .models import Category, Product
 
-admin.site.register(Product)
-admin.site.register(Category)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ('name',)}
+    search_fields = ['name']
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'price', 'available', 'created_at']
+    list_filter = ['available', 'created_at', 'category']
+    search_fields = ['name', 'description']
+    prepopulated_fields = {'slug': ('name',)} if 'slug' in [f.name for f in Product._meta.fields] else {}
