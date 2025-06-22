@@ -3,15 +3,15 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# المسار الأساسي للمشروع
+# ✅ المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# إعدادات الحماية
+# ✅ إعدادات الحماية
 SECRET_KEY = 'django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7'
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# ✅ التطبيقات
+# ✅ التطبيقات المثبتة
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,9 +20,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # تطبيقات الطرف الثالث
     'cloudinary',
-    'cloudinary_storage',  # ← مخصصة للتخزين السحابي
-    
+    'cloudinary_storage',
+
+    # تطبيقات المشروع
     'store',
     'accounts',
     'dashboard',
@@ -39,7 +41,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# روابط المشروع
+# ✅ روابط المشروع
 ROOT_URLCONF = 'asssa.urls'
 
 # ✅ إعداد القوالب
@@ -59,9 +61,10 @@ TEMPLATES = [
     },
 ]
 
+# ✅ تطبيق WSGI
 WSGI_APPLICATION = 'asssa.wsgi.application'
 
-# قاعدة البيانات
+# ✅ قاعدة البيانات
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -69,7 +72,7 @@ DATABASES = {
     }
 }
 
-# تحقق كلمات المرور
+# ✅ التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -77,7 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# اللغة والتوقيت
+# ✅ اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
@@ -91,15 +94,15 @@ cloudinary.config(
   secure = True
 )
 
-# ✅ جعل Cloudinary هو التخزين الأساسي للوسائط
+# ✅ التخزين السحابي للوسائط (صور المنتجات مثلاً)
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# الملفات الثابتة
+# ✅ الملفات الثابتة (CSS/JS)
 STATIC_URL = 'static/'
 
-# إعدادات الوسائط
+# ✅ إعدادات الوسائط (لن تُستخدم مع Cloudinary لكن نتركها احتياطًا)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# نوع الحقول التلقائي
+# ✅ الحقل الافتراضي للموديلات
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
