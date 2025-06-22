@@ -4,14 +4,14 @@ import cloudinary.uploader
 import cloudinary.api
 from decouple import config
 import os
-
+from decouple import config
 # المسار الأساسي
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # الحماية
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ['.onrender.com'] if not DEBUG else []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
 
 # التطبيقات
 INSTALLED_APPS = [
