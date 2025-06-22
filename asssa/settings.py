@@ -2,20 +2,18 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-
-# ✅ المسار الأساسي للمشروع
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# ✅ إعدادات الحماية
-SECRET_KEY = 'django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7'
-
+from decouple import config
 import os
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = ['.onrender.com']
+# المسار الأساسي
+BASE_DIR = Path(__file__).resolve().parent.parent
 
+# الحماية
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = ['.onrender.com'] if not DEBUG else []
 
-# ✅ التطبيقات المثبتة
+# التطبيقات
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,17 +22,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # تطبيقات الطرف الثالث
+    # الطرف الثالث
     'cloudinary',
     'cloudinary_storage',
 
-    # تطبيقات المشروع
+    # تطبيقاتك
     'store',
     'accounts',
     'dashboard',
 ]
 
-# ✅ الوسيطات
+# الوسيطات
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -45,10 +43,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ✅ روابط المشروع
+# روابط المشروع
 ROOT_URLCONF = 'asssa.urls'
 
-# ✅ إعداد القوالب
+# القوالب
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -65,16 +63,30 @@ TEMPLATES = [
     },
 ]
 
-# ✅ تطبيق WSGI
+# WSGI
 WSGI_APPLICATION = 'asssa.wsgi.application'
 
-import dj_database_url
+# قاعدة البيانات
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
 
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'))
-}
-
-# ✅ التحقق من كلمات المرور
+# التحقق من كلمات المرور
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -82,29 +94,30 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# ✅ اللغة والتوقيت
+# اللغة والتوقيت
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ إعدادات Cloudinary
-cloudinary.config( 
-  cloud_name = "duxou2ane",
-  api_key = "255475613753895",
-  api_secret = "fcYKr7pg-BpFxolKIfNApzTGZ64",
-  secure = True
+# Cloudinary
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME", default="duxou2ane"),
+    api_key=config("CLOUDINARY_API_KEY", default="255475613753895"),
+    api_secret=config("CLOUDINARY_API_SECRET", default="fcYKr7pg-BpFxolKIfNApzTGZ64"),
+    secure=True
 )
 
-# ✅ التخزين السحابي للوسائط (صور المنتجات مثلاً)
+# التخزين السحابي للوسائط
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# ✅ الملفات الثابتة (CSS/JS)
+# الملفات الثابتة
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ✅ إعدادات الوسائط (لن تُستخدم مع Cloudinary لكن نتركها احتياطًا)
+# الوسائط
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ✅ الحقل الافتراضي للموديلات
+# الحقل الافتراضي
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
