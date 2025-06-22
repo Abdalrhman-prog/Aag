@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('store.urls')),
     path('accounts/', include('accounts.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('cart/', include('cart.urls')),  # ✅ تم إضافة رابط تطبيق السلة
 ]
 
 if settings.DEBUG:

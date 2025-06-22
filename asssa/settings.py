@@ -4,7 +4,7 @@ import cloudinary.uploader
 import cloudinary.api
 from decouple import config
 import os
-from decouple import config
+
 # المسار الأساسي
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'accounts',
     'dashboard',
+    'cart',  # ✅ أضفنا تطبيق السلة
 ]
 
 # الوسيطات
