@@ -8,8 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ✅ إعدادات الحماية
 SECRET_KEY = 'django-insecure-mjol@n6t_c^_h#cn73fysw%mi&=!dg&&m7jqbluwzn97)knrp7'
-DEBUG = True
-ALLOWED_HOSTS = []
+
+import os
+
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = ['.onrender.com']
+
 
 # ✅ التطبيقات المثبتة
 INSTALLED_APPS = [
@@ -64,12 +68,10 @@ TEMPLATES = [
 # ✅ تطبيق WSGI
 WSGI_APPLICATION = 'asssa.wsgi.application'
 
-# ✅ قاعدة البيانات
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'))
 }
 
 # ✅ التحقق من كلمات المرور
