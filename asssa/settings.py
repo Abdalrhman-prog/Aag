@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'store',
     'accounts',
     'dashboard',
-    'cart',  # ✅ أضفنا تطبيق السلة
+    'cart',
 ]
 
 # الوسيطات
@@ -113,7 +113,7 @@ cloudinary.config(
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # الملفات الثابتة
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # الوسائط
